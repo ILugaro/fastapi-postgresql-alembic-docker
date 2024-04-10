@@ -1,0 +1,11 @@
+Postgres:
+  host: db
+  port: 5432
+  password: postgres
+  database: foo
+  user: postgres
+
+
+Service:
+  host: 127.0.0.1
+  port: 8000
