@@ -1,10 +1,10 @@
-"""Роут для запросов для продуктов"""
-from fastapi import APIRouter, Path
+"""Роут запросов для продуктов"""
 from typing import Annotated, Literal
+
+from fastapi import APIRouter, Path
 
 from app.schemas.product import Product, ProductsData
 from app.services.product import ProductService
-
 
 router = APIRouter(prefix='/product')
 

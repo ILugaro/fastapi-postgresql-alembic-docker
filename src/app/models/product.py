@@ -1,13 +1,15 @@
+"""SQL модель продуктов"""
 import datetime
 from typing import Optional
+
+from sqlalchemy import DateTime, Float, ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 from app.models.category import Category
 from app.models.category_path import CategoryPath
 from app.models.city import City
 from app.models.nomenclature import Nomenclature
-from sqlalchemy import DateTime, Float, ForeignKey, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
 class Product(Base):

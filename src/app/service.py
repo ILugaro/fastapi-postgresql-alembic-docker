@@ -1,9 +1,10 @@
-from fastapi import FastAPI
-from uvicorn import run
-
+"""ASGI"""
 import os
 from contextlib import asynccontextmanager
 from typing import Union
+
+from fastapi import FastAPI
+from uvicorn import run
 
 from app import constants
 from app.api.router import router
@@ -11,9 +12,11 @@ from app.services.parser import ParserService
 from app.services.product import ProductService
 from settings import Service
 
-dir = os.path.dirname(os.path.abspath(__file__))
+folder_path = os.path.dirname(os.path.abspath(__file__))
+
 
 class APIService:
+    """ASGI"""
     def __init__(self, settings: Union[Service, None] = None) -> None:
         """
         Инициализации ASGI приложения
@@ -22,9 +25,7 @@ class APIService:
         if settings is None:
             self.settings = Service()
 
-        self.main_app = FastAPI(
-            lifespan=check_and_create_db
-        )
+        self.main_app = FastAPI(lifespan=check_and_create_db)
 
         self.main_app.include_router(router)
 
@@ -55,7 +56,7 @@ async def check_and_create_db(app: FastAPI):
     if await ProductService.count_of_product() == 0:
         print('Начато заполнение пустой БД (первый запуск)')
         await ParserService.create_db_from_excel(
-            str(os.path.join(dir, '..',  'files', constants.NAME_OF_EXCEL_FILE))
+            str(os.path.join(folder_path, '..', 'files', constants.NAME_OF_EXCEL_FILE))
         )
         print(f'Заполнение БД завершено, внесено {await ProductService.count_of_product()} наименований')
     print('Запуск REST API')

@@ -1,3 +1,4 @@
+"""Application main"""
 from app.service import api_service
 
 app = api_service.get_app()

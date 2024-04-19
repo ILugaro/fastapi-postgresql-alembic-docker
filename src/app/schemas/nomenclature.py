@@ -1,3 +1,4 @@
+"""Pydantic модель номенклатуры"""
 from pydantic import BaseModel
 
 
@@ -8,5 +9,6 @@ class Nomenclature(BaseModel):
     nomenclature: str
 
     class Config:
-        from_attributes = True  # формируется на основе данных из SQL
+        """Конфигурация модели"""
 
+        from_attributes = True  # формируется на основе данных из SQL

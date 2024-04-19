@@ -1,3 +1,4 @@
+"""Pydantic модель продуктов"""
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
@@ -34,10 +35,13 @@ class Product(BaseModel):
         return constants.URL_PATH_FOR_PRODUCT + self.url_id + '/'
 
     class Config:
+        """Конфигурация модели"""
+
         from_attributes = True  # формируется на основе данных из SQL
 
 
 @dataclass
 class ProductsData:
     """Информация о продуктах в form-data"""
+
     data: list[Product]

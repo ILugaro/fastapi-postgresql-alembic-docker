@@ -1,6 +1,7 @@
-
-
+"""Pydantic модель городов"""
 from pydantic import BaseModel
+
+
 class City(BaseModel):
     """Города"""
 
@@ -8,6 +9,6 @@ class City(BaseModel):
     city: str
 
     class Config:
+        """Конфигурация модели"""
+
         from_attributes = True  # формируется на основе данных из SQL
-
-

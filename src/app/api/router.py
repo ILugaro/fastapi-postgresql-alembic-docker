@@ -1,3 +1,4 @@
+"Модуль для роутов"
 from fastapi import APIRouter
 
 from app.api.routers import product

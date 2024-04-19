@@ -1,0 +1,13 @@
+[tool.isort]
+src_paths = ['src', 'app', 'settings']
+profile = 'black'
+
+[tool.black]
+line-length = 109
+skip-string-normalization = 1
+
+[tool.pylint.format]
+max-line-length = 109
+
+[tool.pylint.master]
+init-hook='import sys; sys.path.append(".")'
