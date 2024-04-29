@@ -1,16 +1,12 @@
 # pull official base image
 FROM python:3.11-slim-buster
 
-
-
-
 # set working directory
 WORKDIR /usr/src
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
 
 # install system dependencies
 RUN apt-get update \
@@ -24,6 +20,7 @@ RUN apt-get update \
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
 COPY ./requirements.txt .
+#COPY docker-entrypoint-initdb.d /docker-entrypoint-initdb.d
 RUN pip install -r requirements.txt
 
 # add app

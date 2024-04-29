@@ -2,7 +2,7 @@ Postgres:
   host: db
   port: 5432
   password: postgres
-  database: foo
+  database: db_product
   user: postgres
 
 
