@@ -17,7 +17,6 @@ folder_path = os.path.dirname(os.path.abspath(__file__))
 
 class APIService:
     """ASGI"""
-
     def __init__(self, settings: Union[Service, None] = None) -> None:
         """
         Инициализации ASGI приложения
@@ -65,8 +64,3 @@ async def check_and_create_db(app: FastAPI):
 
 
 api_service = APIService()
-
-
-if __name__ == "__main__":
-    # Для использования в целях дебага
-    api_service.serve(path_to_app="main:app")
