@@ -1,3 +1,4 @@
+"""Парсинг локальных файлов"""
 import re
 
 from openpyxl import load_workbook

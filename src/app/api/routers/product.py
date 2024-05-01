@@ -1,18 +1,23 @@
 """Роут запросов для продуктов"""
-from typing import Annotated, Literal
+from typing import Annotated, Literal, Union
 
 from fastapi import APIRouter, Path
 
-from app.schemas.product import Product, ProductsData
+from app import models, schemas
+from app.schemas.product import ProductsData
 from app.services.product import ProductService
 
 router = APIRouter(prefix='/product')
 
 
 @router.get(
-    '/product/{product_id}', response_model=Product, description="Получить продукт по идентификатору БД"
+    '/product/{product_id}',
+    response_model=schemas.Product,
+    description="Получить продукт по идентификатору БД",
 )
-async def get_all_products(product_id: Annotated[int, Path(description="Идентификатору БД")]) -> Product:
+async def get_product_by_id(
+    product_id: Annotated[int, Path(description="Идентификатору БД")]
+) -> models.Product:
     """
     Получение с БД экземпляра продукта по внутреннему PK id
 
@@ -23,10 +28,19 @@ async def get_all_products(product_id: Annotated[int, Path(description="Иден
 
 
 @router.get('/all_products/', response_model=ProductsData, description="Получить всю продукцию")
-async def get_product_by_id() -> dict[Literal["data"], list[Product]]:
+async def get_all_products(
+    page: Annotated[int, Path(description='Страница пагинации')] = 1,
+    limit: Annotated[int, Path(description='Лимит количества продуктов на страницу')] = 10,
+) -> dict[
+    Literal["page_number", "page_size", "total_pages", "total_products", "data"],
+    Union[int, list[models.Product]],
+]:
     """
     Получение с БД всех экземпляров продукции
 
+    :param page: Страница пагинации
+    :param limit: Лимит количества продуктов на страницу
     :return: Экземпляры всех продуктов в БД
     """
-    return {'data': await ProductService.get_all_products()}
+
+    return await ProductService.get_all_products(page, limit)

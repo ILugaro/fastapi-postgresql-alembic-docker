@@ -44,4 +44,8 @@ class Product(BaseModel):
 class ProductsData:
     """Информация о продуктах в form-data"""
 
+    page_number: int
+    page_size: int
+    total_pages: int
+    total_products: int
     data: list[Product]
