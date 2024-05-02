@@ -13,10 +13,10 @@ router = APIRouter(prefix='/product')
 @router.get(
     '/product/{product_id}',
     response_model=schemas.Product,
-    description="Получить продукт по идентификатору БД",
+    description="Получить продукт по внутреннему идентификатору",
 )
 async def get_product_by_id(
-    product_id: Annotated[int, Path(description="Идентификатору БД")]
+    product_id: Annotated[int, Path(description="Внутренний идентификатор продукта")]
 ) -> models.Product:
     """
     Получение с БД экземпляра продукта по внутреннему PK id
