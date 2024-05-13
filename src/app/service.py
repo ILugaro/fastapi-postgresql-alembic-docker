@@ -8,6 +8,8 @@ from uvicorn import run
 
 from app import constants
 from app.api.router import router
+from app.database import async_session_maker
+from app.models.product import Product
 from app.services.parser import ParserService
 from app.services.product import ProductService
 from settings import Service
@@ -17,6 +19,7 @@ folder_path = os.path.dirname(os.path.abspath(__file__))
 
 class APIService:
     """ASGI"""
+
     def __init__(self, settings: Union[Service, None] = None) -> None:
         """
         Инициализации ASGI приложения
@@ -53,11 +56,18 @@ async def check_and_create_db(app: FastAPI):
 
     :return: None
     """
+
     if await ProductService.count_of_product() == 0:
         print('Начато заполнение пустой БД (первый запуск)')
-        await ParserService.create_db_from_excel(
+        # парсинг Excel документа
+        products: list[Product] = await ParserService.create_products_from_excel(
             str(os.path.join(folder_path, '..', 'files', constants.NAME_OF_EXCEL_FILE))
         )
+        # внесение полученных продуктов в БД
+        async with async_session_maker() as session:
+            session.add_all(products)
+            await session.commit()
+
         print(f'Заполнение БД завершено, внесено {await ProductService.count_of_product()} наименований')
     print('Запуск REST API')
     yield

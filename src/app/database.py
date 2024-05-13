@@ -1,9 +1,9 @@
 """Database configuration"""
 from datetime import datetime
-from typing import Final
+from typing import AsyncGenerator, Final
 
 from sqlalchemy import DateTime, MetaData, func
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, AsyncEngine
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
 
 from settings import PostgresQL
@@ -16,8 +16,13 @@ DATABASE_URL: Final[str] = (
 )
 
 engine: AsyncEngine = create_async_engine(DATABASE_URL, future=True)
-async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
+async_session_maker = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)  # TODO MyPy
 metadata = MetaData()
+
+
+async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
+    async with async_session_maker() as session:
+        yield session
 
 
 class Base(DeclarativeBase):

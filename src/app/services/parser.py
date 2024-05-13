@@ -4,7 +4,6 @@ import re
 from openpyxl import load_workbook
 
 from app import constants
-from app.database import async_session
 from app.models import Category
 from app.models import CategoryPath
 from app.models import City
@@ -16,12 +15,12 @@ class ParserService:
     """Обработка Excel документа"""
 
     @staticmethod
-    async def create_db_from_excel(path_of_file: str):
+    async def create_products_from_excel(path_of_file: str)->list[Product]:
         """
-        Получение данных о продукции из xlsx файла и внесение в БД
+        Получение данных о продукции из xlsx файла
 
         :param path_of_file: Путь к xlsx файлу с продуктами
-        :return: None
+        :return: Объекты продуктов из указанного excel файла
         """
         wb = load_workbook(path_of_file)
         sheet = wb.active
@@ -81,7 +80,4 @@ class ParserService:
                     razmer=row[constants.RAZMER_COL - 1],
                 )
             )
-
-        async with async_session() as session:
-            session.add_all(products)
-            await session.commit()
+        return products
