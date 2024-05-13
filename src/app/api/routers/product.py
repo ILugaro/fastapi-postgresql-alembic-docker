@@ -33,8 +33,8 @@ async def get_product_by_id(
 
 @router.get('/all_products/', response_model=ProductsData, description="Получить всю продукцию")
 async def get_all_products(
-    page: Annotated[int, Query(description='Страница пагинации')] = 1,
-    limit: Annotated[int, Query(description='Лимит количества продуктов на страницу')] = 10,
+    page: Annotated[int, Query(description='Страница пагинации', gt=0)] = 1,
+    limit: Annotated[int, Query(description='Лимит количества продуктов на страницу', gt=0)] = 10,
     session: AsyncSession = Depends(get_async_session),
 ) -> dict[
     Literal["page_number", "page_size", "total_pages", "total_products", "data"],

@@ -2,8 +2,10 @@
 import math
 from typing import Literal, Union
 
+from fastapi import HTTPException
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette import status
 
 from app.database import async_session_maker
 from app.models.product import Product
@@ -70,4 +72,7 @@ class ProductService:
 
         query = select(Product).where(Product.id == product_id)
         result = await session.execute(query)
-        return result.scalars().first()  # TODO raise при отсутствии результата
+        product: Product | None= result.scalars().first()
+        if not product:
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, 'Продукта с таким id нет в БД.')
+        return product
