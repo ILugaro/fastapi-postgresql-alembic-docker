@@ -6,9 +6,9 @@ from sqlalchemy import DateTime, MetaData, func
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
 
-from settings import PostgresQL
+from settings import PostgreSQL
 
-postgres = PostgresQL()
+postgres = PostgreSQL()
 
 DATABASE_URL: Final[str] = (
     f"postgresql+asyncpg://"
@@ -21,12 +21,13 @@ metadata = MetaData()
 
 
 async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
+    """Создание SQL сессии"""
     async with async_session_maker() as session:
         yield session
 
 
 class Base(DeclarativeBase):
-    """DeclarativeBase configuration"""
+    """DeclarativeBase конфигурация"""
 
     create_time: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     update_time: Mapped[datetime] = mapped_column(

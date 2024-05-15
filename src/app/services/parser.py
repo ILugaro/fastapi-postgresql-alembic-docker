@@ -15,7 +15,7 @@ class ParserService:
     """Обработка Excel документа"""
 
     @staticmethod
-    async def create_products_from_excel(path_of_file: str)->list[Product]:
+    async def create_products_from_excel(path_of_file: str) -> list[Product]:
         """
         Получение данных о продукции из xlsx файла
 
