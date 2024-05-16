@@ -22,6 +22,7 @@ class Product(BaseModel):
     price: float
     url_id: str
     warehouse: Optional[str]
+    count: Optional[int]
     instock: Optional[str]
     city: schemas.City
     updated_at: datetime

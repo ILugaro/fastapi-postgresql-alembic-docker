@@ -21,6 +21,7 @@ async def test_create_products_from_excel():
     assert products[0].price == 4599
     assert products[0].url_id == '2867791'
     assert products[0].warehouse is None
+    assert products[0].count is None
     assert products[0].instock is None
     assert products[0].city.city == 'msk'
     assert products[0].updated_at.year == 2024

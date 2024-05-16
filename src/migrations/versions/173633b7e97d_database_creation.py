@@ -62,6 +62,7 @@ def upgrade() -> None:
     sa.Column('price', sa.Float(), nullable=False, comment='Цена'),
     sa.Column('url_id', sa.String(length=9), nullable=False, comment='id для формирования url на страницу продукта'),
     sa.Column('warehouse', sa.String(length=80), nullable=True, comment='Изготовитель'),
+    sa.Column('count', sa.Integer(), nullable=True, comment='Количество'),
     sa.Column('instock', sa.String(length=40), nullable=True, comment='Складской статус'),
     sa.Column('city_id', sa.Integer(), nullable=False, comment='Внутренний идентификатор города'),
     sa.Column('updated_at', sa.DateTime(), nullable=False, comment='Дата обновления'),

@@ -4,10 +4,7 @@ import re
 from openpyxl import load_workbook
 
 from app import constants
-from app.models import Category
-from app.models import CategoryPath
-from app.models import City
-from app.models import Nomenclature
+from app.models import Category, CategoryPath, City, Nomenclature
 from app.models.product import Product
 
 
@@ -74,6 +71,7 @@ class ParserService:
                     url_id=row[constants.URL_COL - 1].split('/')[-2],
                     warehouse=row[constants.WAREHOUSE_COL - 1],
                     instock=row[constants.INSTOCK_COL - 1],
+                    count=row[constants.COUNT - 1],
                     city=city_bases[row[constants.CITY_COL - 1]],
                     updated_at=row[constants.UPDATED_AT_COL - 1],
                     discount_price=row[constants.DISCOUNT_PRICE_COL - 1],

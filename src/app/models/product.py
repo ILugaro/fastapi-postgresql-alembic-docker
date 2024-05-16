@@ -13,7 +13,7 @@ from app.models.nomenclature import Nomenclature
 
 
 class Product(Base):
-    '''Основная таблицы содержащая информацию о продуктах'''
+    """Основная таблицы содержащая информацию о продуктах"""
 
     __tablename__ = 'product'
 
@@ -44,6 +44,7 @@ class Product(Base):
     )  # TODO unique=True сделать не удалось из-за дублирования товаров (214547, 8454, ...)
 
     warehouse: Mapped[Optional[str]] = mapped_column(String(80), comment='Изготовитель')
+    count: Mapped[int] = mapped_column(Integer, comment='Количество')
     instock: Mapped[Optional[str]] = mapped_column(String(40), comment='Складской статус')
     city_id: Mapped[int] = mapped_column(
         Integer, ForeignKey(City.id), comment='Внутренний идентификатор города'
