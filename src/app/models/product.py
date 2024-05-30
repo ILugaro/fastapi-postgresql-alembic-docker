@@ -44,7 +44,7 @@ class Product(Base):
     )  # TODO unique=True сделать не удалось из-за дублирования товаров (214547, 8454, ...)
 
     warehouse: Mapped[Optional[str]] = mapped_column(String(80), comment='Изготовитель')
-    count: Mapped[int] = mapped_column(Integer, comment='Количество')
+    count: Mapped[[Optional[int]]] = mapped_column(Integer, comment='Количество')
     instock: Mapped[Optional[str]] = mapped_column(String(40), comment='Складской статус')
     city_id: Mapped[int] = mapped_column(
         Integer, ForeignKey(City.id), comment='Внутренний идентификатор города'

@@ -72,7 +72,7 @@ class ProductService:
 
         query = select(Product).where(Product.id == product_id)
         result = await session.execute(query)
-        product: Product | None= result.scalars().first()
+        product: Product | None = result.scalars().first()
         if not product:
             raise HTTPException(status.HTTP_400_BAD_REQUEST, 'Продукта с таким id нет в БД.')
         return product
